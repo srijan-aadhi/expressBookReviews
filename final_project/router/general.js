@@ -38,16 +38,18 @@ public_users.get('/',async function (req, res) {
 });
 
 // Get book details based on ISBN
-public_users.get('/isbn/:isbn',function (req, res) {
+public_users.get('/isbn/:isbn', async function (req, res) {
   //Write your code here
   const isbn = req.params.isbn;
-  const book = books[isbn];
 
-  if (!book) {
-    return res.status(404).json({ message: "no book found" })
-  } else {
+  try {
+    const fetchBook = () => new Promise((resolve) => setTimeout(resolve(books[isbn]), 1000));
+    const book = await fetchBook();
     return res.status(200).send(JSON.stringify(book));
-  } 
+  } catch (err) {
+    return res.status(400).json({ message: "Error returning book" })
+  }
+  
  });
   
 // Get book details based on author
