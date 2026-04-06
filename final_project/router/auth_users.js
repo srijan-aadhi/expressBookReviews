@@ -32,7 +32,7 @@ regd_users.post("/login", (req,res) => {
   const accessToken = jwt.sign({ username: user.username }, 'fingerprint_customer', { expiresIn: 60 * 60 })
   req.session.authorization = { accessToken: accessToken }
   
-  return res.status(200).json({ message: "Successfully registered user",
+  return res.status(200).json({ message: "Successfully logged in",
                                 token: accessToken })
 });
 
