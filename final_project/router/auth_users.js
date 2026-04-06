@@ -70,7 +70,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
   }
 
   //add a new entry
-  reviews[username] = { review: user.review };
+  reviews[username] = { review: review };
   return res.status(200).json({ message: "Review successfully created"});
   
 });
