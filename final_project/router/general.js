@@ -60,7 +60,9 @@ public_users.get('/author/:author', async function (req, res) {
   try {
     const fetchBooksByAuthor = () => new Promise((resolve) => setTimeout(resolve(Object.entries(books).find(([_, val]) => val.author === author)), 1000));
     const book = await fetchBooksByAuthor();
-
+    if (!book) {
+        return res.status(404).json({ message: "No books found for this author" });
+    }
     return res.status(200).send(JSON.stringify(book));
 
     } catch(err) {
