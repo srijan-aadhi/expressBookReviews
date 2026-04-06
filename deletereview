@@ -1,0 +1,2 @@
+curl -X DELETE "https://srijanaad19-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/customer/auth/review/6" -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNvZGEiLCJpYXQiOjE3NzU1MTA0NzQsImV4cCI6MTc3NTUxNDA3NH0.tRGa2AYKgS0as3r45REUesqmDyYNsYO35GpkNp6BoFA" -d '{"username": "soda", "review":"not tuff stuff bud"}' 
+OK
