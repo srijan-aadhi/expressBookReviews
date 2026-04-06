@@ -2,6 +2,7 @@ const express = require('express');
 let books = require("./booksdb.js");
 let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
+const BASE_URL = "https://srijanaad19-5000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/"
 const public_users = express.Router();
 
 
@@ -24,9 +25,16 @@ public_users.post("/register", (req,res) => {
 });
 
 // Get the book list available in the shop
-public_users.get('/',function (req, res) {
+public_users.get('/',async function (req, res) {
   //Write your code here
-  return res.send(JSON.stringify(books));
+  try {
+    const fetchBooks = () => new Promise((resolve) => setTimeout(resolve(books), 1000))
+    const allBooks = await fetchBooks();
+    
+    return res.send(JSON.stringify(allBooks));
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching books" })
+  }
 });
 
 // Get book details based on ISBN
