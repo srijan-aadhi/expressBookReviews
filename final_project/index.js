@@ -12,6 +12,15 @@ app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUni
 
 app.use("/customer/auth/*", function auth(req,res,next){
 //Write the authenication mechanism here
+// 1. Manually grab the token from the Header
+const authHeader = req.headers['authorization'];
+const tokenFromHeader = authHeader && authHeader.split(' ')[1];
+
+// 2. If we found a token in the header, stuff it into the session
+if (tokenFromHeader) {
+    req.session.authorization = { accessToken: tokenFromHeader };
+}
+
 if (!req.session.authorization) {
     return res.status(400).json({ message: "token unavailable or expired" });
 }

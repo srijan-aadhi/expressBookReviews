@@ -45,7 +45,59 @@ regd_users.post("/login", (req,res) => {
 // Add a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+
+  const { username, review } = req.body;
+
+  if (!username || !review) {
+    return res.status(400).json({ message: "username and review must be provided" });
+  }
+
+  const isbn = req.params.isbn;
+  const book = books[isbn];
+
+  if (!book) {
+    return res.status(400).json({ message: "book is not found" });
+  }
+
+  const reviews = book["reviews"]
+
+  //find if this user has already inserted a review
+  const user = reviews[username]
+  if (user) {
+    //edit the review: PUT
+    user.review = review;
+    return res.status(200).json({ message: "Review successfully edited" })
+  }
+
+  //add a new entry
+  reviews[username] = { review: user.review };
+  return res.status(200).json({ message: "Review successfully created"});
+  
+});
+
+//Delete a book review
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+  const { username, review } = req.body;
+
+  if (!username || !review) {
+    return res.status(400).json({ message: "username and review must be provided" });
+  }
+
+  const isbn = req.params.isbn;
+  const book = books[isbn];
+
+  if (!book) {
+    return res.status(400).json({ message: "book is not found" });
+  }
+
+  const reviews = book["reviews"];
+
+  //find if this user has already inserted a review
+  delete reviews[username];
+
+  return res.send(200).json({ message: "Review deleted" });
+
+
 });
 
 module.exports.authenticated = regd_users;
