@@ -44,7 +44,7 @@ public_users.get('/isbn/:isbn', async function (req, res) {
 
   try {
     const fetchBooksByIsbn = () => new Promise((resolve) => setTimeout(resolve(books[isbn]), 1000));
-    const book = await fetchBook();
+    const book = await fetchBooksByIsbn();
     return res.status(200).send(JSON.stringify(book));
   } catch (err) {
     return res.status(400).json({ message: "Error fetching books by isbn" })
@@ -58,7 +58,7 @@ public_users.get('/author/:author', async function (req, res) {
   const author = req.params.author;
 
   try {
-    const fetchBooksByAuthor = () => newPromise((resolve) => setTimeout(resolve(Object.entries(books).find(([_, val]) => val.author === author)), 1000));
+    const fetchBooksByAuthor = () => new Promise((resolve) => setTimeout(resolve(Object.entries(books).find(([_, val]) => val.author === author)), 1000));
     const book = await fetchBooksByAuthor();
 
     return res.status(200).send(JSON.stringify(book));
